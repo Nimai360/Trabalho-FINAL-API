@@ -1,6 +1,7 @@
 package trabalho.serratec.api.Trabalho.de.API.model;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -11,13 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -54,14 +53,13 @@ public class UserModel {
 	@NotBlank
 	private String senha;
 	
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "relacionamento_perfis",
-	joinColumns = @JoinColumn(name = "userId_seguindo"),
-	inverseJoinColumns = @JoinColumn(name = "userId_seguidor"))
-	private List<RelacionamentoModel> relacionamento;
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(name = "relacionamento_perfis",
+//	joinColumns = @JoinColumn(name = "userId_seguindo"),
+//	inverseJoinColumns = @JoinColumn(name = "userId_seguidor"))
+//	private List<RelacionamentoModel> relacionamento;
 	
-	@NotEmpty
-	@NotBlank
+	@Past(message = "A data é inválida")
 	private Date dataNascimento;
 	
 	@OneToMany(mappedBy="usuario", cascade = CascadeType.ALL)
@@ -115,7 +113,13 @@ public class UserModel {
 		return dataNascimento;
 	}
 
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(Date dataNascimento) throws Exception {
+		System.out.println(LocalDateTime.now());
+		LocalDateTime dtNasc = dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+		
+		if(LocalDateTime.now().isBefore(dtNasc)) {
+			throw new Exception("Data de nascimento inválida");
+		}
 		this.dataNascimento = dataNascimento;
 	}
 
