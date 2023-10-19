@@ -42,9 +42,9 @@ public class CommentController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<CommentModel> inserir(@RequestBody CommentModel comment) throws IOException {
+	public ResponseEntity<CommentDTO> inserir(@RequestBody CommentModel comment) throws IOException {
 		comment = commentService.inserir(null, comment);
-		return ResponseEntity.status(HttpStatus.CREATED).body(comment);
+		return ResponseEntity.status(HttpStatus.CREATED).body(new CommentDTO(comment));
 	}
 	
 	@PutMapping("/{id}")

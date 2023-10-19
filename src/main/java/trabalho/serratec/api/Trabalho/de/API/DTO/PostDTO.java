@@ -1,5 +1,6 @@
 package trabalho.serratec.api.Trabalho.de.API.DTO;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import trabalho.serratec.api.Trabalho.de.API.model.CommentModel;
@@ -13,17 +14,18 @@ public class PostDTO {
 	
 	private Post_UserDTO usuario;
 	
-	private Set<CommentModel> comentarios;
+	private Set<Post_CommentDTO> comentarios;
 	
 	public PostDTO() {}
 	
 	public PostDTO(PostModel post) {
+		this.id = post.getId();
 		this.conteudo = post.getConteudo();
 		this.usuario = new Post_UserDTO(post.getUsuario());
-//		this.comentarios = new HashSet<>();
-//		for (CommentModel comentarios :  usuario.getUsuarioPerfis()) {
-//			this.perfis.add(usuarioPerfil.getId().getPerfil());
-//		}
+		this.comentarios = new HashSet<>();
+		for (CommentModel comentario : post.getComentarios()) {
+			this.comentarios.add(new Post_CommentDTO(comentario));
+		}
 	}
 
 	public Long getId() {
@@ -50,11 +52,11 @@ public class PostDTO {
 		this.usuario = usuario;
 	}
 
-	public Set<CommentModel> getComentarios() {
+	public Set<Post_CommentDTO> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(Set<CommentModel> comentarios) {
+	public void setComentarios(Set<Post_CommentDTO> comentarios) {
 		this.comentarios = comentarios;
 	}
 	

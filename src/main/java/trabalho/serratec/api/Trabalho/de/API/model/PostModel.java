@@ -1,8 +1,8 @@
 package trabalho.serratec.api.Trabalho.de.API.model;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,7 +36,7 @@ public class PostModel {
 	
 	@OneToMany(mappedBy="postagem", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<CommentModel> comentarios;
+	private Set<CommentModel> comentarios;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -65,11 +65,11 @@ public class PostModel {
 		this.usuario = usuario;
 	}
 
-	public List<CommentModel> getComentarios() {
+	public Set<CommentModel> getComentarios() {
 		return comentarios;
 	}
 
-	public void setComentarios(List<CommentModel> comentarios) {
+	public void setComentarios(Set<CommentModel> comentarios) {
 		this.comentarios = comentarios;
 	}
 
