@@ -6,4 +6,5 @@ import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
+	UserModel findByEmail(String email);
 }

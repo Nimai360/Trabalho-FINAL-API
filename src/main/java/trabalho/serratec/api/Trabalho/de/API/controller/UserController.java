@@ -1,7 +1,8 @@
 package trabalho.serratec.api.Trabalho.de.API.controller;
 
-import java.io.IOException;
 import java.util.List;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.service.UserService;
 
@@ -42,13 +44,13 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<UserModel> inserir(@RequestBody UserModel usuario) throws IOException {
-		usuario = userService.inserir(null, usuario);
-		return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
+	public ResponseEntity<UserDTO> inserir(@Valid @RequestBody UserInserirDTO usuario) throws Exception {
+		UserDTO user = userService.inserir(null, usuario);
+		return ResponseEntity.status(HttpStatus.CREATED).body(user);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity update(@RequestBody UserModel usuario, @PathVariable Long id) {
+	public ResponseEntity update(@Valid @RequestBody UserModel usuario, @PathVariable Long id) {
 		return userService.atualizar(usuario, id);
 	}
 	

@@ -1,9 +1,10 @@
 package trabalho.serratec.api.Trabalho.de.API.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.util.Utils;
@@ -42,12 +44,21 @@ public class UserService {
 		return new UserDTO(usuarioOpt.get());
 	}
 	
-	public UserModel inserir(MultipartFile file, UserModel user) throws IOException {
-		user = userRepository.save(user);
-		return user;
+	public UserDTO inserir(MultipartFile file, UserInserirDTO user) throws Exception {
+		if (!user.getSenha().equals(user.getConfirmarSenha())) {
+			throw new Exception("Senha e Confirma Senha devem ser iguais");
+		}
+		UserModel usuarioEmailExistente = userRepository.findByEmail(user.getEmail());
+		if (usuarioEmailExistente != null) {
+			throw new Exception("Email já cadastrado.");
+		}
+		UserModel usuario = new UserModel(user);
+		
+		usuario = userRepository.save(usuario);
+		return new UserDTO(usuario);
 	}
 	
-	public ResponseEntity atualizar(@RequestBody UserModel usuario, @PathVariable Long id) {
+	public ResponseEntity atualizar(UserModel usuario, Long id) {
 		var user = userRepository.findById(id).orElse(null);
 
 		if (user == null) {

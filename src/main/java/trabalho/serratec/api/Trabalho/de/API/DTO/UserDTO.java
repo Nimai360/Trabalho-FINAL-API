@@ -12,7 +12,7 @@ import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 public class UserDTO {
 
 	private Long id;
-	
+
 	private String nome;
 
 	private String sobrenome;
@@ -24,18 +24,21 @@ public class UserDTO {
 	private Date dataNascimento;
 
 	private Set<User_PostDTO> postagens;
-	
-	public UserDTO() {}
-	
+
+	public UserDTO() {
+	}
+
 	public UserDTO(UserModel usuario) {
 		this.id = usuario.getId();
 		this.nome = usuario.getNome();
 		this.sobrenome = usuario.getSobrenome();
 		this.email = usuario.getEmail();
 		this.dataNascimento = usuario.getDataNascimento();
-		this.postagens = new HashSet<>();
-		for (PostModel postagem : usuario.getPostagens()) {
-			this.postagens.add(new User_PostDTO(postagem));
+		if (usuario.getPostagens() != null) {
+			this.postagens = new HashSet<>();
+			for (PostModel postagem : usuario.getPostagens()) {
+				this.postagens.add(new User_PostDTO(postagem));
+			}
 		}
 	}
 

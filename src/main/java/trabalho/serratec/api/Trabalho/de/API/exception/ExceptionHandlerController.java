@@ -7,7 +7,12 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
-public class ExceptionHandlerController {
+public class ExceptionHandlerController {//extends ResponseEntityExceptionHandler  {
+	
+//	@ExceptionHandler({EmailException.class, SenhaException.class})
+//	protected ResponseEntity<?> handleEmailException(Exception ex) {
+//		return ResponseEntity.unprocessableEntity().body(ex.getMessage());
+//	}
 
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException e){

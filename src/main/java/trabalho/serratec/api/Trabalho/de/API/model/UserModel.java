@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
@@ -22,6 +23,8 @@ import javax.validation.constraints.Past;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 
 //import jakarta.persistence.Entity;
 //import jakarta.persistence.GeneratedValue;
@@ -36,36 +39,47 @@ public class UserModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotEmpty
-	@NotBlank
+	@NotBlank(message = "Nome é obrigatorio")
 	private String nome;
-	
+
 	@NotEmpty
 	@NotBlank
 	private String sobrenome;
-	
+
 	@Column(unique = true)
 	@NotEmpty
 	@NotBlank
+	@Email(message = "deve ser um endereço de e-mail bem formado")
 	private String email;
-	
+
 	@NotEmpty
 	@NotBlank
 	private String senha;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.seguindo")
 	private List<RelacionamentoModel> relacionamento;
-	
+
 	@Past(message = "A data é inválida")
 	private Date dataNascimento;
-	
-	@OneToMany(mappedBy="usuario", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<PostModel> postagens;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
+	
+	public UserModel() {}
+
+	public UserModel(UserInserirDTO novo_usuario) {
+		this.nome = novo_usuario.getNome();
+		this.sobrenome = novo_usuario.getSobrenome();
+		this.email = novo_usuario.getEmail();
+		this.senha = novo_usuario.getSenha();
+		this.dataNascimento = novo_usuario.getDataNascimento();
+	}
 
 	public Long getId() {
 		return id;
@@ -73,7 +87,7 @@ public class UserModel {
 
 	public void setId(Long id) {
 		this.id = id;
-	}	
+	}
 
 	public Set<PostModel> getPostagens() {
 		return postagens;
@@ -122,9 +136,10 @@ public class UserModel {
 	public void setDataNascimento(Date dataNascimento) throws Exception {
 		System.out.println(LocalDateTime.now());
 		LocalDateTime dtNasc = dataNascimento.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-		
-		if(LocalDateTime.now().isBefore(dtNasc)) {
+
+		if (LocalDateTime.now().isBefore(dtNasc)) {
 			throw new Exception("Data de nascimento inválida");
+//			throw new ExceptionHandlerController
 		}
 		this.dataNascimento = dataNascimento;
 	}
