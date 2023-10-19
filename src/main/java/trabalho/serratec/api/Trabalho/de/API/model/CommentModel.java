@@ -30,8 +30,9 @@ public class CommentModel {
 	@JsonBackReference
 	private PostModel postagem;
 	
-	@Column
-	private Long usuario_id;
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private UserModel usuario;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -42,29 +43,19 @@ public class CommentModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}	
+
+	public UserModel getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UserModel usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getTexto() {
 		return texto;
 	}	
-	
-	
-
-//	public UserModel getUsuario() {
-//		return usuario;
-//	}
-//
-//	public void setUsuario(UserModel usuario) {
-//		this.usuario = usuario;
-//	}
-
-	public Long getUsuario_id() {
-		return usuario_id;
-	}
-
-	public void setUsuario_id(Long usuario_id) {
-		this.usuario_id = usuario_id;
-	}
 
 	public void setTexto(String texto) {
 		this.texto = texto;

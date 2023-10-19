@@ -13,11 +13,11 @@ public class UsuarioRelacionamentoPK implements Serializable  {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
-	@JoinColumn(name = "id_usuario")
+	@JoinColumn(name = "id_seguidor")
 	private UserModel seguidor; 
 	
 	@ManyToOne
-	@JoinColumn(name = "id_perfil")
+	@JoinColumn(name = "id_seguindo")
 	private UserModel seguindo;
 
 	public UserModel getSeguidor() {

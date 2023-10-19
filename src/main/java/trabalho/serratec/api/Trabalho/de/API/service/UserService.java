@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,27 +47,6 @@ public class UserService {
 		return user;
 	}
 	
-//	@PutMapping("/{id}")
-//	public ResponseEntity<Produto> atualizar(@RequestBody Produto produto, @PathVariable Long id) {
-//		Optional<Produto> produtoOpt = produtoRepository.findById(id);
-//		if (produtoOpt.isEmpty()) {
-//			return ResponseEntity.notFound().build();
-//		}
-//		
-//		/*
-//		produto.setId(id);
-//		produto = produtoRepository.save(produto);
-//		*/
-//		
-//		Produto produtoBD = produtoOpt.get();
-//		produtoBD.setDataCadastro(produto.getDataCadastro());
-//		produtoBD.setDescricao(produto.getDescricao());
-//		produtoBD.setValor(produto.getValor());
-//		
-//		produto = produtoRepository.save(produtoBD);
-//		return ResponseEntity.ok(produto);
-//	}
-	
 	public ResponseEntity atualizar(@RequestBody UserModel usuario, @PathVariable Long id) {
 		var user = userRepository.findById(id).orElse(null);
 
@@ -85,7 +63,7 @@ public class UserService {
 	public ResponseEntity<Void> remover(Long id) { // 15
 		Optional<UserModel> userOpt = userRepository.findById(id);
 		if (userOpt.isEmpty()) {
-			return ResponseEntity.notFound().build();
+			return null;
 		}
 		userRepository.deleteById(id);
 		return ResponseEntity.noContent().build();

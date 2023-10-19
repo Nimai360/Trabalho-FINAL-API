@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -53,18 +54,15 @@ public class UserModel {
 	@NotBlank
 	private String senha;
 	
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(name = "relacionamento_perfis",
-//	joinColumns = @JoinColumn(name = "userId_seguindo"),
-//	inverseJoinColumns = @JoinColumn(name = "userId_seguidor"))
-//	private List<RelacionamentoModel> relacionamento;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "id.seguindo")
+	private List<RelacionamentoModel> relacionamento;
 	
 	@Past(message = "A data é inválida")
 	private Date dataNascimento;
 	
 	@OneToMany(mappedBy="usuario", cascade = CascadeType.ALL)
 	@JsonManagedReference
-	private List<PostModel> postagens;
+	private Set<PostModel> postagens;
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
@@ -75,6 +73,14 @@ public class UserModel {
 
 	public void setId(Long id) {
 		this.id = id;
+	}	
+
+	public Set<PostModel> getPostagens() {
+		return postagens;
+	}
+
+	public void setPostagens(Set<PostModel> postagens) {
+		this.postagens = postagens;
 	}
 
 	public String getNome() {
