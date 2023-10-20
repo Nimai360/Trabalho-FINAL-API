@@ -52,7 +52,7 @@ public class RelacionamentoService {
 			
 			UsuarioRelacionamentoPK pk = new UsuarioRelacionamentoPK(usuario_logadoOpt.get(), usuario_seguidoOpt.get());
 			Optional<RelacionamentoModel> relOpt = relacionamentoRepository.findById(pk);
-			
+			 
 //			Optional<RelacionamentoModel> relOpt = relacionamentoRepository.buscarRelacionamento(usuario_logadoOpt.get().getId(), usuario_seguidoOpt.get().getId());
 			
 			if(relOpt.isPresent()) {
