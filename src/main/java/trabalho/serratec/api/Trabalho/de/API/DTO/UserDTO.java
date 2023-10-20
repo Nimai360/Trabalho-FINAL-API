@@ -5,6 +5,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
 import trabalho.serratec.api.Trabalho.de.API.model.RelacionamentoModel;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
@@ -12,15 +19,23 @@ import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 public class UserDTO {
 
 	private Long id;
-
+	
+	@NotNull(message = "O nome não pode estar nulo")
+	@NotBlank(message = "O nome não pode ser em branco")
+	@NotEmpty(message = "O nome não pode ser vazio")	
 	private String nome;
 
+	@NotNull(message = "O sobrenome não pode estar nulo")
+	@NotBlank(message = "O sobrenome não pode ser em branco")
+	@NotEmpty(message = "O sobrenome não pode ser vazio")	
 	private String sobrenome;
 
+	@Email
 	private String email;
 
 	private List<RelacionamentoModel> relacionamento;
 
+	@DateTimeFormat
 	private Date dataNascimento;
 
 	private Set<User_PostDTO> postagens;

@@ -34,14 +34,19 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 		return super.handleExceptionInternal(ex, erroResposta, headers, status, request);
 	}
 	
-	@Override
-	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-			HttpHeaders headers, HttpStatus status, WebRequest request) {
-		return ResponseEntity.badRequest().body(ex.getMessage());
-	}	
+//	@Override
+//	protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
+//			HttpHeaders headers, HttpStatus status, WebRequest request) {
+//		return ResponseEntity.badRequest().body(ex.getMessage());
+//	}	
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	protected ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+		return ResponseEntity.badRequest().body(ex.getMessage());
+	}
+	
+	@ExceptionHandler(Exception.class)
+	protected ResponseEntity<Object> handleDataIntegrityViolationExceptionException(Exception ex) {
 		return ResponseEntity.badRequest().body(ex.getMessage());
 	}
 	

@@ -1,7 +1,10 @@
 package trabalho.serratec.api.Trabalho.de.API.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
+
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
@@ -29,7 +35,7 @@ public class UserController {
 	UserService userService;
 	
 	@GetMapping
-	public ResponseEntity<List<UserDTO>> listar() {
+	public ResponseEntity<List<UserDTO>> listar() throws StreamReadException, DatabindException, IOException {
 		List<UserDTO> usuarios = userService.listar();
 		return ResponseEntity.ok(usuarios);
 	}

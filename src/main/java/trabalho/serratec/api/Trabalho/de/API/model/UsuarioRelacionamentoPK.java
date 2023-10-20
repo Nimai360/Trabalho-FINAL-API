@@ -19,6 +19,13 @@ public class UsuarioRelacionamentoPK implements Serializable  {
 	@ManyToOne
 	@JoinColumn(name = "id_seguindo")
 	private UserModel seguindo;
+	
+	public UsuarioRelacionamentoPK() {}
+	
+	public UsuarioRelacionamentoPK(UserModel seguidor, UserModel seguindo) {
+		this.seguidor = seguidor;
+		this.seguindo = seguindo;
+	}
 
 	public UserModel getSeguidor() {
 		return seguidor;

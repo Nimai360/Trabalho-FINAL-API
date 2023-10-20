@@ -1,18 +1,23 @@
 package trabalho.serratec.api.Trabalho.de.API.service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.core.exc.StreamReadException;
+import com.fasterxml.jackson.databind.DatabindException;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
@@ -26,7 +31,10 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public List<UserDTO> listar() {
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	public List<UserDTO> listar() throws StreamReadException, DatabindException, IOException {
 		List<UserModel> usuariosList = userRepository.findAll();
 		
 		List<UserDTO> usuariosDtoList = usuariosList.stream().map(user -> {
@@ -52,7 +60,9 @@ public class UserService {
 		if (usuarioEmailExistente != null) {
 			throw new Exception("Email já cadastrado.");
 		}
+		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
 		UserModel usuario = new UserModel(user);
+		System.out.println("Senha criptografada: " + usuario.getSenha());
 		
 		usuario = userRepository.save(usuario);
 		return new UserDTO(usuario);

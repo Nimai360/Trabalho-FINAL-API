@@ -3,6 +3,10 @@ package trabalho.serratec.api.Trabalho.de.API.DTO;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import trabalho.serratec.api.Trabalho.de.API.model.CommentModel;
 import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
 
@@ -10,6 +14,9 @@ public class PostDTO {
 	
 	private Long id;
 	
+	@NotNull(message = "O post não pode ser nulo")
+	@NotBlank(message = "O post não pode ser em branco")
+	@NotEmpty(message = "O post não pode ser vazio")	
 	private String conteudo;
 	
 	private Post_UserDTO usuario;

@@ -1,5 +1,10 @@
 package trabalho.serratec.api.Trabalho.de.API.DTO;
 
+import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import trabalho.serratec.api.Trabalho.de.API.model.CommentModel;
 import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
@@ -10,6 +15,9 @@ public class CommentDTO {
 	
 	private Long post_id;
 	
+	@NotNull(message = "O comentário não pode ser nulo")
+	@NotBlank(message = "O comentário não pode ser em branco")
+	@NotEmpty(message = "O comentário não pode ser vazio")	
 	private String texto;
 	
 	private Post_UserDTO usuario;

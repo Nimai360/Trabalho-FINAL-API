@@ -7,6 +7,8 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public class Utils {
 
@@ -37,5 +39,10 @@ public class Utils {
 
 		String[] result = new String[emptyNames.size()];
 		return emptyNames.toArray(result);
+	}
+	
+	public static String getUsernameUsuarioLogado() {
+		UserDetails detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return detail.getUsername();
 	}
 }

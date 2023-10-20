@@ -2,9 +2,15 @@ package trabalho.serratec.api.Trabalho.de.API.DTO;
 
 import java.util.Date;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
 public class UserInserirDTO {
+	@NotBlank(message = "Nome é obrigatorio")
 	private String nome;
 	private String sobrenome;
+	@Email(message = "deve ser um endereço de e-mail bem formado")
 	private String email;
 	private String senha;
 	private String confirmarSenha;
