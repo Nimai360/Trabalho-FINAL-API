@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.service.UserService;
 
@@ -56,7 +57,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity update(@Valid @RequestBody UserModel usuario, @PathVariable Long id) {
+	public ResponseEntity update(@Valid @RequestBody UserUpdateDTO usuario, @PathVariable Long id) {
 		return userService.atualizar(usuario, id);
 	}
 	

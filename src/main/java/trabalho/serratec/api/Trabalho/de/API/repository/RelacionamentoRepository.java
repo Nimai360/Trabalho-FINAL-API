@@ -11,12 +11,19 @@ import trabalho.serratec.api.Trabalho.de.API.model.UsuarioRelacionamentoPK;
 
 public interface RelacionamentoRepository extends JpaRepository<RelacionamentoModel, Long>  {
 
-	List<RelacionamentoModel> findByIdSeguidor(Long id);
-	List<RelacionamentoModel> findByIdSeguindo(Long id);
+//	List<RelacionamentoModel> findByIdSeguidor(Long id);
+//	List<RelacionamentoModel> findByIdSeguindo(Long id);
 	Optional<RelacionamentoModel> findByIdSeguidorAndIdSeguindo(Long IdSeguidor, Long IdSeguindo);
 	
 	@Query(value="SELECT * FROM usuario_relacionamento WHERE id_seguidor = :seguidor AND id_seguindo = :seguindo", nativeQuery = true)
-	Optional<RelacionamentoModel> buscarRelacionamento(Long seguidor, Long seguindo);
+	Optional<RelacionamentoModel> buscarRelacionamento(Long seguidor, Long seguindo);	
+	
+	
+	@Query(value="SELECT * FROM usuario_relacionamento WHERE id_seguindo = :id", nativeQuery = true)
+	List<RelacionamentoModel> findBySeguindoID(Long id);
+	
+	@Query(value="SELECT * FROM usuario_relacionamento WHERE id_seguidor = :id", nativeQuery = true)
+	List<RelacionamentoModel> findBySeguidoPorID(Long id);
 	
 	Optional<RelacionamentoModel> findById(UsuarioRelacionamentoPK id);
 }

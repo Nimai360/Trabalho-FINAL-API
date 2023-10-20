@@ -25,6 +25,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
 
 //import jakarta.persistence.Entity;
 //import jakarta.persistence.GeneratedValue;
@@ -79,6 +80,14 @@ public class UserModel {
 		this.email = novo_usuario.getEmail();
 		this.senha = novo_usuario.getSenha();
 		this.dataNascimento = novo_usuario.getDataNascimento();
+	}
+	
+	public UserModel(UserUpdateDTO update_usuario) {
+		this.nome = update_usuario.getNome();
+		this.sobrenome = update_usuario.getSobrenome();
+		this.email = update_usuario.getEmail();
+		this.senha = update_usuario.getSenha();
+		this.dataNascimento = update_usuario.getDataNascimento();
 	}
 
 	public Long getId() {

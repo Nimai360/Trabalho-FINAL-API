@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.util.Utils;
@@ -68,16 +69,16 @@ public class UserService {
 		return new UserDTO(usuario);
 	}
 	
-	public ResponseEntity atualizar(UserModel usuario, Long id) {
-		var user = userRepository.findById(id).orElse(null);
+	public ResponseEntity atualizar(UserUpdateDTO usuario, Long id) {
+		UserModel user = userRepository.findById(id).orElse(null);
 
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado");
 		}
-
+System.out.println(user.getDataNascimento());
 		Utils.copyNonNullProperties(usuario, user);
 		
-		var userUpdated = userRepository.save(usuario);
+		var userUpdated = userRepository.save(new UserModel(usuario));
 		return ResponseEntity.ok().body(userUpdated);
 	}
 

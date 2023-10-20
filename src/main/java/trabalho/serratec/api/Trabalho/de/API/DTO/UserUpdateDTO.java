@@ -2,22 +2,20 @@ package trabalho.serratec.api.Trabalho.de.API.DTO;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class UserInserirDTO {
-	@NotBlank(message = "Nome é obrigatorio")
+public class UserUpdateDTO {
 	private String nome;
 	private String sobrenome;
-	@Email(message = "deve ser um endereço de e-mail válido")
+//	@Email(message = "deve ser um endereço de e-mail válido")
 	private String email;
-	@NotEmpty
 	private String senha;
-	private String confirmarSenha;
-	@JsonFormat(pattern = "dd/MM/yyyy")
+//	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
 
 	public String getNome() {
@@ -50,14 +48,6 @@ public class UserInserirDTO {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getConfirmarSenha() {
-		return confirmarSenha;
-	}
-
-	public void setConfirmarSenha(String confirmarSenha) {
-		this.confirmarSenha = confirmarSenha;
 	}
 
 	public Date getDataNascimento() {

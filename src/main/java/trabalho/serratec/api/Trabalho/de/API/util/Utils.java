@@ -15,6 +15,8 @@ public class Utils {
 	/*
 	 * Mesclar as informações do objeto, inserindo os dados não passados nos campos
 	 * nulos que o usuário pode não ter informado
+	 * source = vem com campos nulos
+	 * target = minha base com todas as informações
 	 */
 	public static void copyNonNullProperties(Object source, Object target) {
 		BeanUtils.copyProperties(source, target, getNullPropertyNames(source));
