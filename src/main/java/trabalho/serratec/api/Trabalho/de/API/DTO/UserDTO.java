@@ -39,6 +39,8 @@ public class UserDTO {
 	private Date dataNascimento;
 
 	private Set<User_PostDTO> postagens;
+	
+	private String url;
 
 	public UserDTO() {
 	}
@@ -112,4 +114,13 @@ public class UserDTO {
 	public void setPostagens(Set<User_PostDTO> postagens) {
 		this.postagens = postagens;
 	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	
 }

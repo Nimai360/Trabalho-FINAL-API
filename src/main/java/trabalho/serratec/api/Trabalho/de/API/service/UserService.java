@@ -1,25 +1,22 @@
 package trabalho.serratec.api.Trabalho.de.API.service;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
@@ -32,6 +29,9 @@ public class UserService {
 
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	private FotoService fotoService;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -40,10 +40,22 @@ public class UserService {
 		List<UserModel> usuariosList = userRepository.findAll();
 
 		List<UserDTO> usuariosDtoList = usuariosList.stream().map(user -> {
-			return new UserDTO(user);
+//			return new UserDTO(user); 
+			return adicionaImagemURI(new UserDTO(user));
 		}).collect(Collectors.toList());
 
 		return usuariosDtoList;
+	}
+	
+	public UserDTO adicionaImagemURI(UserDTO usuario) {
+		URI uri = ServletUriComponentsBuilder.
+				fromCurrentContextPath()
+				.path("/usuarios/{id}/foto")
+				.buildAndExpand(usuario.getId())
+				.toUri();
+		
+		usuario.setUrl(uri.toString());
+		return usuario;
 	}
 
 	public UserDTO buscar(Long id) {
@@ -64,10 +76,15 @@ public class UserService {
 		}
 		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
 		UserModel usuario = new UserModel(user);
-		System.out.println("Senha criptografada: " + usuario.getSenha());
 
 		usuario = userRepository.save(usuario);
-		return new UserDTO(usuario);
+//		return new UserDTO(usuario);
+		if(file == null) {
+			return new UserDTO(usuario);
+		}
+		
+		fotoService.inserir(usuario, file);
+		return adicionaImagemURI(new UserDTO(usuario));
 	}
 
 	public ResponseEntity atualizar(UserUpdateDTO usuario, Long id) {
@@ -78,7 +95,6 @@ public class UserService {
 		}
 		System.out.println(user.getDataNascimento());
 		Utils.copyNonNullProperties(usuario, user);
-		System.out.println("111111111111111111");
 
 		var userUpdated = userRepository.save(user);
 		return ResponseEntity.ok().body(new UserDTO(userUpdated));

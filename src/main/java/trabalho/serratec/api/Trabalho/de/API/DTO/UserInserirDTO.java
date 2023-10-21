@@ -19,6 +19,8 @@ public class UserInserirDTO {
 	private String confirmarSenha;
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataNascimento;
+	
+	private String url;
 
 	public String getNome() {
 		return nome;
@@ -68,4 +70,11 @@ public class UserInserirDTO {
 		this.dataNascimento = dataNascimento;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
 }
