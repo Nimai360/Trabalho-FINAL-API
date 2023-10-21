@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
@@ -28,23 +29,23 @@ import trabalho.serratec.api.Trabalho.de.API.util.Utils;
 
 @Service
 public class UserService {
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	public List<UserDTO> listar() throws StreamReadException, DatabindException, IOException {
 		List<UserModel> usuariosList = userRepository.findAll();
-		
+
 		List<UserDTO> usuariosDtoList = usuariosList.stream().map(user -> {
 			return new UserDTO(user);
 		}).collect(Collectors.toList());
-		
+
 		return usuariosDtoList;
 	}
-	
+
 	public UserDTO buscar(Long id) {
 		Optional<UserModel> usuarioOpt = userRepository.findById(id);
 		if (usuarioOpt.isEmpty()) {
@@ -52,7 +53,7 @@ public class UserService {
 		}
 		return new UserDTO(usuarioOpt.get());
 	}
-	
+
 	public UserDTO inserir(MultipartFile file, UserInserirDTO user) throws Exception {
 		if (!user.getSenha().equals(user.getConfirmarSenha())) {
 			throw new Exception("Senha e Confirma Senha devem ser iguais");
@@ -64,22 +65,23 @@ public class UserService {
 		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
 		UserModel usuario = new UserModel(user);
 		System.out.println("Senha criptografada: " + usuario.getSenha());
-		
+
 		usuario = userRepository.save(usuario);
 		return new UserDTO(usuario);
 	}
-	
+
 	public ResponseEntity atualizar(UserUpdateDTO usuario, Long id) {
 		UserModel user = userRepository.findById(id).orElse(null);
 
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado");
 		}
-System.out.println(user.getDataNascimento());
+		System.out.println(user.getDataNascimento());
 		Utils.copyNonNullProperties(usuario, user);
-		
-		var userUpdated = userRepository.save(new UserModel(usuario));
-		return ResponseEntity.ok().body(userUpdated);
+		System.out.println("111111111111111111");
+
+		var userUpdated = userRepository.save(user);
+		return ResponseEntity.ok().body(new UserDTO(userUpdated));
 	}
 
 	public ResponseEntity<Void> remover(Long id) { // 15

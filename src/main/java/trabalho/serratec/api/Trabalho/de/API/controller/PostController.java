@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.PostDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.PostInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
 import trabalho.serratec.api.Trabalho.de.API.service.PostService;
+import trabalho.serratec.api.Trabalho.de.API.service.RelacionamentoService;
 
 @RestController
 @RequestMapping("/posts")
@@ -42,9 +44,9 @@ public class PostController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<PostModel> inserir(@RequestBody PostModel post) throws IOException {
-		post = postService.inserir(null, post);
-		return ResponseEntity.status(HttpStatus.CREATED).body(post);
+	public ResponseEntity<PostModel> inserir(@RequestBody PostInserirDTO post) throws IOException {
+		PostModel p = postService.inserir(null, post);
+		return ResponseEntity.status(HttpStatus.CREATED).body(p);
 	}
 	
 	@PutMapping("/{id}")

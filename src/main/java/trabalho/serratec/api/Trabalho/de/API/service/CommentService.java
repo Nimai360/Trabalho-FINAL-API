@@ -1,6 +1,5 @@
 package trabalho.serratec.api.Trabalho.de.API.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,11 +10,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.CommentDTO;
+import trabalho.serratec.api.Trabalho.de.API.DTO.CommentInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.CommentModel;
+import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
+import trabalho.serratec.api.Trabalho.de.API.model.RelacionamentoModel;
+import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
+import trabalho.serratec.api.Trabalho.de.API.model.UsuarioRelacionamentoPK;
 import trabalho.serratec.api.Trabalho.de.API.repository.CommentRepository;
+import trabalho.serratec.api.Trabalho.de.API.repository.PostRepository;
+import trabalho.serratec.api.Trabalho.de.API.repository.RelacionamentoRepository;
+import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.util.Utils;
 
 @Service
@@ -23,6 +29,15 @@ public class CommentService {
 	
 	@Autowired
 	CommentRepository commentRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
+	@Autowired
+	PostRepository postRepository;
+	
+	@Autowired
+	RelacionamentoRepository relacionamentoRepository;
 
 	public List<CommentDTO> listar() {
 		List<CommentModel> commentList = commentRepository.findAll();
@@ -42,9 +57,27 @@ public class CommentService {
 		return new CommentDTO(commentOpt.get());
 	}
 
-	public CommentModel inserir(MultipartFile file, CommentModel comment) throws IOException {
-		comment = commentRepository.save(comment);
-		return comment;
+	public CommentModel inserir(CommentInserirDTO comment) throws Exception {
+		UserModel userLogado = userRepository.findByEmail(Utils.getUsernameUsuarioLogado());
+		Optional<PostModel> pm = postRepository.findById(comment.getPostagem_id());
+		
+		if(!pm.isPresent()) {
+			throw new Exception("Postagem não encontrada");
+		}
+		if(userLogado.equals(pm.get().getUsuario())) {
+			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
+			cm = commentRepository.save(cm);
+			return cm;
+		}
+		
+		UsuarioRelacionamentoPK pk = new UsuarioRelacionamentoPK(userLogado, pm.get().getUsuario());
+		Optional<RelacionamentoModel> relOpt = relacionamentoRepository.findById(pk);
+		if(relOpt.isPresent()) {
+			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
+			cm = commentRepository.save(cm);
+			return cm;
+		}
+		throw new Exception("Comentário só pode ser feito quando seguir este usuário");
 	}
 
 	public ResponseEntity atualizar(@RequestBody CommentModel comment, @PathVariable Long id) {

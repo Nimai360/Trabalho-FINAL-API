@@ -83,6 +83,23 @@ public class RelacionamentoService {
 		throw new Exception("Usuário não encontrado");
 	}
 
+	public Boolean isMyFollowing(Long id_seguindo) throws Exception {
+		Optional<UserModel> usuario_seguidoOpt = userRepository.findById(id_seguindo);
+		if (usuario_seguidoOpt.isPresent()) {
+			Optional<UserModel> usuario_logadoOpt = Optional
+					.ofNullable(userRepository.findByEmail(Utils.getUsernameUsuarioLogado()));
+
+			UsuarioRelacionamentoPK pk = new UsuarioRelacionamentoPK(usuario_logadoOpt.get(), usuario_seguidoOpt.get());
+			Optional<RelacionamentoModel> relOpt = relacionamentoRepository.findById(pk);
+
+			if (relOpt.isPresent()) {
+				return true;
+//				throw new Exception("Você já está seguindo este usuario");
+			}
+		}
+		return false;
+	}
+
 	public ResponseEntity<Void> remover(Long id_seguindo) throws Exception {
 		Optional<UserModel> usuario_seguidoOpt = userRepository.findById(id_seguindo);
 		if (usuario_seguidoOpt.isPresent()) {
@@ -95,7 +112,7 @@ public class RelacionamentoService {
 			if (!relOpt.isPresent()) {
 				throw new Exception("Você ainda não segue este usuário");
 			}
-			
+
 			RelacionamentoModel rm = new RelacionamentoModel(usuario_seguidoOpt.get(), usuario_logadoOpt.get());
 
 			relacionamentoRepository.delete(rm);

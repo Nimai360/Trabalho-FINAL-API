@@ -20,6 +20,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import trabalho.serratec.api.Trabalho.de.API.DTO.PostInserirDTO;
+
 @Entity(name = "tb_posts")
 public class PostModel {
 
@@ -42,6 +44,13 @@ public class PostModel {
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
+	
+	public PostModel() {}
+	
+	public PostModel(PostInserirDTO novoPost, UserModel usuarioLogado) {
+		this.conteudo = novoPost.getConteudo();
+		this.usuario = usuarioLogado;
+	}
 
 	public Long getId() {
 		return id;

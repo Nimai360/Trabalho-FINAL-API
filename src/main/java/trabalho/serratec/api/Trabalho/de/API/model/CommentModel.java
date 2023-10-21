@@ -16,6 +16,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import trabalho.serratec.api.Trabalho.de.API.DTO.CommentInserirDTO;
+
 @Entity(name = "tb_comments")
 public class CommentModel {
 
@@ -38,6 +40,14 @@ public class CommentModel {
 
 	@CreationTimestamp
 	private LocalDateTime createdAt;
+	
+	public CommentModel() {}
+	
+	public CommentModel(CommentInserirDTO comment, PostModel post, UserModel user) {
+		this.texto = comment.getTexto();
+		this.postagem = post;
+		this.usuario = user;
+	}
 
 	public Long getId() {
 		return id;
