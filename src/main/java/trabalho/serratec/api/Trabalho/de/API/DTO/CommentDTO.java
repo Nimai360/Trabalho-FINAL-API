@@ -1,5 +1,7 @@
 package trabalho.serratec.api.Trabalho.de.API.DTO;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -27,6 +29,8 @@ public class CommentDTO {
 	 * */
 	private Post_UserDTO usuario;
 	
+	private LocalDateTime data;
+	
 	public CommentDTO() {}
 	
 	public CommentDTO(CommentModel comentario) {
@@ -34,6 +38,7 @@ public class CommentDTO {
 		this.id = comentario.getId();
 		this.texto = comentario.getTexto();
 		this.usuario = new Post_UserDTO(comentario.getUsuario());
+		this.data = comentario.getCreatedAt();
 	}	
 
 	public Long getId() {
@@ -67,5 +72,15 @@ public class CommentDTO {
 	public void setUsuario(Post_UserDTO usuario) {
 		this.usuario = usuario;
 	}
+
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
+	}
+	
+	
 	
 }

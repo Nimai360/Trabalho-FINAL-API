@@ -47,7 +47,7 @@ public class CommentController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<CommentDTO> listar(@PathVariable Long id) {
+	public ResponseEntity<CommentDTO> buscar(@PathVariable Long id) {
 		CommentDTO comment = commentService.buscar(id);
 		if (comment == null) {
 			ResponseEntity.notFound().build();

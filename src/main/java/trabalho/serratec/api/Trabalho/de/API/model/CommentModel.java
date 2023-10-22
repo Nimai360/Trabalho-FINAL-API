@@ -44,10 +44,11 @@ public class CommentModel {
 	
 	public CommentModel() {}
 	
-	public CommentModel(String comment, PostModel post, UserModel user) {
-		this.texto = comment;
+	public CommentModel(CommentDTO comment, PostModel post, UserModel user) {
+		this.texto = comment.getTexto();
 		this.postagem = post;
 		this.usuario = user;
+		this.createdAt = comment.getData();
 	}
 
 	public Long getId() {

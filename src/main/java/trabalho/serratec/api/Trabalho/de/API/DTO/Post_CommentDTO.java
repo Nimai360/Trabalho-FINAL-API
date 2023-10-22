@@ -1,12 +1,12 @@
 package trabalho.serratec.api.Trabalho.de.API.DTO;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import trabalho.serratec.api.Trabalho.de.API.model.CommentModel;
-import trabalho.serratec.api.Trabalho.de.API.model.PostModel;
-import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 
 public class Post_CommentDTO {
 	
@@ -19,12 +19,15 @@ public class Post_CommentDTO {
 	
 	private Post_UserDTO usuario;
 	
+	private LocalDateTime data;
+	
 	public Post_CommentDTO() {}
 	
 	public Post_CommentDTO(CommentModel comentario) {
 		this.id = comentario.getId();
 		this.texto = comentario.getTexto();
 		this.usuario = new Post_UserDTO(comentario.getUsuario());
+		this.data = comentario.getCreatedAt();
 	}	
 
 	public Long getId() {
@@ -49,6 +52,14 @@ public class Post_CommentDTO {
 
 	public void setUsuario(Post_UserDTO usuario) {
 		this.usuario = usuario;
+	}
+
+	public LocalDateTime getData() {
+		return data;
+	}
+
+	public void setData(LocalDateTime data) {
+		this.data = data;
 	}
 	
 }

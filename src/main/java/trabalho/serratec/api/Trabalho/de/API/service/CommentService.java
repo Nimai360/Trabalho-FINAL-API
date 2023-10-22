@@ -67,7 +67,7 @@ public class CommentService {
 		}
 		// Verifica se o usuario informado é o mesmo que está logado
 		if(userLogado.equals(pm.get().getUsuario())) {
-			CommentModel cm = new CommentModel(comment.getTexto(), pm.get(), userLogado);
+			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
 			cm = commentRepository.save(cm);
 			return new CommentDTO(cm);
 		}
@@ -76,7 +76,7 @@ public class CommentService {
 		UsuarioRelacionamentoPK pk = new UsuarioRelacionamentoPK(userLogado, pm.get().getUsuario());
 		Optional<RelacionamentoModel> relOpt = relacionamentoRepository.findById(pk);
 		if(relOpt.isPresent()) {
-			CommentModel cm = new CommentModel(comment.getTexto(), pm.get(), userLogado);
+			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
 			System.out.println("Ou está salvando aqui?");
 			cm = commentRepository.save(cm);
 			return new CommentDTO(cm);			

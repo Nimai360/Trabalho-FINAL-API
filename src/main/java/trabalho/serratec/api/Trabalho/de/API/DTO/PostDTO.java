@@ -1,5 +1,6 @@
 package trabalho.serratec.api.Trabalho.de.API.DTO;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,6 +24,8 @@ public class PostDTO {
 	
 	private Set<Post_CommentDTO> comentarios;
 	
+	private LocalDateTime date;
+	
 	public PostDTO() {}
 	
 	public PostDTO(PostModel post) {
@@ -33,6 +36,7 @@ public class PostDTO {
 		for (CommentModel comentario : post.getComentarios()) {
 			this.comentarios.add(new Post_CommentDTO(comentario));
 		}
+		this.date = post.getCreatedAt();
 	}
 
 	public Long getId() {
@@ -65,6 +69,14 @@ public class PostDTO {
 
 	public void setComentarios(Set<Post_CommentDTO> comentarios) {
 		this.comentarios = comentarios;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 	
 	
