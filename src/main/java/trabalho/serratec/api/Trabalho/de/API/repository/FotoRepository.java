@@ -11,6 +11,6 @@ import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 @Repository
 public interface FotoRepository extends JpaRepository<FotoModel, Long> {
 
-	public Optional<FotoModel> findByUsuario(UserModel userModel);
+	public Optional<FotoModel> findByUsuario(UserModel usuario);
 	
 }

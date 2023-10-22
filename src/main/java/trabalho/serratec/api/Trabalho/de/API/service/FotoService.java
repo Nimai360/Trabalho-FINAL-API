@@ -35,7 +35,7 @@ public class FotoService {
 		return foto;
 	}
 	
-	@Transactional
+	@Transactional // Usado para dar Roll Back do banco de dados ou objetos grandes, como fotos e etc 
 	public FotoModel buscarPorIdUsuario(Long id) {
 		Optional<UserModel> usuarioOpt = userRepository.findById(id);
 		if (usuarioOpt.isEmpty()) {

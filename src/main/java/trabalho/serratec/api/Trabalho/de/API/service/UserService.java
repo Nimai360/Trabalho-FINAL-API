@@ -66,7 +66,7 @@ public class UserService {
 		return new UserDTO(usuarioOpt.get());
 	}
 
-	public UserDTO inserir(MultipartFile file, UserInserirDTO user) throws Exception {
+	public UserDTO inserirComFoto(MultipartFile file, UserInserirDTO user) throws Exception {
 		if (!user.getSenha().equals(user.getConfirmarSenha())) {
 			throw new Exception("Senha e Confirma Senha devem ser iguais");
 		}
@@ -83,6 +83,27 @@ public class UserService {
 			return new UserDTO(usuario);
 		}
 		
+		fotoService.inserir(usuario, file);
+		return adicionaImagemURI(new UserDTO(usuario));
+	}
+	
+	public UserDTO inserir(UserInserirDTO user) throws Exception {
+		if (!user.getSenha().equals(user.getConfirmarSenha())) {
+			throw new Exception("Senha e Confirma Senha devem ser iguais");
+		}
+		UserModel usuarioEmailExistente = userRepository.findByEmail(user.getEmail());
+		if (usuarioEmailExistente != null) {
+			throw new Exception("Email já cadastrado.");
+		}
+		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
+		UserModel usuario = new UserModel(user);
+
+		usuario = userRepository.save(usuario);
+		return new UserDTO(usuario);
+	}
+	
+	public UserDTO inserirFoto(MultipartFile file) throws Exception {
+		UserModel usuario = userRepository.findByEmail(Utils.getUsernameUsuarioLogado());
 		fotoService.inserir(usuario, file);
 		return adicionaImagemURI(new UserDTO(usuario));
 	}
