@@ -57,11 +57,13 @@ public class CommentController {
 
 //	@PostMapping
 //	public ResponseEntity<CommentDTO> inserir(@RequestBody CommentModel comment) throws Exception {
+//		System.out.println(comment.getPostagem().getId());
+////		System.out.println(Utils.getUsernameUsuarioLogado());
 //		// Seguidor comenta em quem é seguido
 //		if (relacionamentoService.isMyFollowing(comment.getPostagem().getUsuario().getId())) {
 //			PostDTO postDTO = postService.buscar(comment.getPostagem().getId());
 //			if (postDTO != null) {
-//				comment = commentService.inserir(null, comment);
+//				comment = commentService.inserir(comment);
 //				return ResponseEntity.status(HttpStatus.CREATED).body(new CommentDTO(comment));
 //			}
 //			throw new Exception("Este post não existe");
@@ -69,10 +71,10 @@ public class CommentController {
 //		throw new Exception("Você não pode comentar nesta postagem, pois você não segue este usuário");
 //	}
 	@PostMapping
-	public ResponseEntity<CommentDTO> inserir(@RequestBody CommentInserirDTO comment) throws Exception{
+	public ResponseEntity<CommentDTO> inserir(@RequestBody CommentDTO comment) throws Exception{
 		// Seguidor comenta em quem é seguido
-		CommentModel comentario = commentService.inserir(comment);
-		return ResponseEntity.status(HttpStatus.CREATED).body(new CommentDTO(comentario));
+		CommentDTO comentario = commentService.inserir(comment);
+		return ResponseEntity.status(HttpStatus.CREATED).body((comentario));
 	}
 
 	@PutMapping("/{id}")

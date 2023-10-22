@@ -16,6 +16,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import trabalho.serratec.api.Trabalho.de.API.DTO.CommentDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.CommentInserirDTO;
 
 @Entity(name = "tb_comments")
@@ -43,8 +44,8 @@ public class CommentModel {
 	
 	public CommentModel() {}
 	
-	public CommentModel(CommentInserirDTO comment, PostModel post, UserModel user) {
-		this.texto = comment.getTexto();
+	public CommentModel(String comment, PostModel post, UserModel user) {
+		this.texto = comment;
 		this.postagem = post;
 		this.usuario = user;
 	}

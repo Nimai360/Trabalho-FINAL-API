@@ -29,8 +29,10 @@ import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.FotoModel;
+import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.service.FotoService;
 import trabalho.serratec.api.Trabalho.de.API.service.UserService;
+import trabalho.serratec.api.Trabalho.de.API.util.Utils;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -60,6 +62,15 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<UserDTO> buscar(@PathVariable Long id) {
 		UserDTO usuario = userService.buscar(id);
+		if (usuario == null) {
+			ResponseEntity.notFound().build();
+		}
+		return ResponseEntity.ok(usuario);
+	}
+	
+	@GetMapping("/perfil")
+	public ResponseEntity<UserDTO> buscarOwn() {
+		UserDTO usuario = userService.buscarOwn();
 		if (usuario == null) {
 			ResponseEntity.notFound().build();
 		}

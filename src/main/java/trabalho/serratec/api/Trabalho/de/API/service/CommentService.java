@@ -57,25 +57,29 @@ public class CommentService {
 		return new CommentDTO(commentOpt.get());
 	}
 
-	public CommentModel inserir(CommentInserirDTO comment) throws Exception {
+	public CommentDTO inserir(CommentDTO comment) throws Exception {
 		UserModel userLogado = userRepository.findByEmail(Utils.getUsernameUsuarioLogado());
-		Optional<PostModel> pm = postRepository.findById(comment.getPostagem_id());
+		Optional<PostModel> pm = postRepository.findById(comment.getPost_id());
 		
+		// Verifica se postagem existe
 		if(!pm.isPresent()) {
 			throw new Exception("Postagem não encontrada");
 		}
+		// Verifica se o usuario informado é o mesmo que está logado
 		if(userLogado.equals(pm.get().getUsuario())) {
-			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
+			CommentModel cm = new CommentModel(comment.getTexto(), pm.get(), userLogado);
 			cm = commentRepository.save(cm);
-			return cm;
+			return new CommentDTO(cm);
 		}
 		
+		// Postagem existe e usuario diferente do logado
 		UsuarioRelacionamentoPK pk = new UsuarioRelacionamentoPK(userLogado, pm.get().getUsuario());
 		Optional<RelacionamentoModel> relOpt = relacionamentoRepository.findById(pk);
 		if(relOpt.isPresent()) {
-			CommentModel cm = new CommentModel(comment, pm.get(), userLogado);
+			CommentModel cm = new CommentModel(comment.getTexto(), pm.get(), userLogado);
+			System.out.println("Ou está salvando aqui?");
 			cm = commentRepository.save(cm);
-			return cm;
+			return new CommentDTO(cm);			
 		}
 		throw new Exception("Comentário só pode ser feito quando seguir este usuário");
 	}

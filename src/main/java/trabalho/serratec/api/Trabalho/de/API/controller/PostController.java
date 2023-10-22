@@ -35,7 +35,7 @@ public class PostController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<PostDTO> listar(@PathVariable Long id) {
+	public ResponseEntity<PostDTO> buscar(@PathVariable Long id) {
 		PostDTO post = postService.buscar(id);
 		if (post == null) {
 			ResponseEntity.notFound().build();

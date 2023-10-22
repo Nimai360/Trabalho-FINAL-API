@@ -20,6 +20,11 @@ public class CommentDTO {
 	@NotEmpty(message = "O comentário não pode ser vazio")	
 	private String texto;
 	
+	/*
+	 * id_post
+	 * nome
+	 * sobrenome
+	 * */
 	private Post_UserDTO usuario;
 	
 	public CommentDTO() {}

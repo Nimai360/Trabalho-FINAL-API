@@ -48,6 +48,11 @@ public class UserService {
 	}
 	
 	public UserDTO adicionaImagemURI(UserDTO usuario) {
+		
+		if(fotoService.buscarPorIdUsuario(usuario.getId()) == null) {
+			return usuario;
+		}
+		
 		URI uri = ServletUriComponentsBuilder.
 				fromCurrentContextPath()
 				.path("/usuarios/{id}/foto")
@@ -63,7 +68,15 @@ public class UserService {
 		if (usuarioOpt.isEmpty()) {
 			return null;
 		}
-		return new UserDTO(usuarioOpt.get());
+		return adicionaImagemURI(new UserDTO(usuarioOpt.get()));
+	}
+	
+	public UserDTO buscarOwn() {
+		UserModel usuario = userRepository.findByEmail(Utils.getUsernameUsuarioLogado());
+		if (usuario == null) {
+			return null;
+		}
+		return adicionaImagemURI(new UserDTO(usuario));
 	}
 
 	public UserDTO inserirComFoto(MultipartFile file, UserInserirDTO user) throws Exception {
