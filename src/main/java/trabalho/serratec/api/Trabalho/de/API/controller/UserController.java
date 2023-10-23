@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,10 +28,8 @@ import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.FotoModel;
-import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.service.FotoService;
 import trabalho.serratec.api.Trabalho.de.API.service.UserService;
-import trabalho.serratec.api.Trabalho.de.API.util.Utils;
 
 @RestController
 @RequestMapping("/usuarios")

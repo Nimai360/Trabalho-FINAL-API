@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import trabalho.serratec.api.Trabalho.de.API.DTO.Post_UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.model.RelacionamentoModel;
-import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.service.RelacionamentoService;
 
 @RestController
