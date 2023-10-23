@@ -109,6 +109,7 @@ public class UserService {
 			throw new Exception("Email já cadastrado.");
 		}
 		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
+		
 		UserModel usuario = new UserModel(user);
 
 		usuario = userRepository.save(usuario);
@@ -123,11 +124,10 @@ public class UserService {
 
 	public ResponseEntity atualizar(UserUpdateDTO usuario, Long id) {
 		UserModel user = userRepository.findById(id).orElse(null);
-
+		
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Usuário não encontrado");
 		}
-		System.out.println(user.getDataNascimento());
 		Utils.copyNonNullProperties(usuario, user);
 
 		var userUpdated = userRepository.save(user);
