@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.DatabindException;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserInserirDTO;
 import trabalho.serratec.api.Trabalho.de.API.DTO.UserUpdateDTO;
+import trabalho.serratec.api.Trabalho.de.API.config.MailConfig;
 import trabalho.serratec.api.Trabalho.de.API.model.UserModel;
 import trabalho.serratec.api.Trabalho.de.API.repository.UserRepository;
 import trabalho.serratec.api.Trabalho.de.API.util.Utils;
@@ -35,6 +36,9 @@ public class UserService {
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	
+	@Autowired
+	private MailConfig mailConfig;
 
 	public List<UserDTO> listar() throws StreamReadException, DatabindException, IOException {
 		List<UserModel> usuariosList = userRepository.findAll();
@@ -88,7 +92,9 @@ public class UserService {
 			throw new Exception("Email já cadastrado.");
 		}
 		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
+		
 		UserModel usuario = new UserModel(user);
+		mailConfig.sendEmail(usuario.getEmail(), "Cadastro de Usuario", usuario.toString());
 
 		usuario = userRepository.save(usuario);
 //		return new UserDTO(usuario);

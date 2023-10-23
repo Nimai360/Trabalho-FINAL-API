@@ -178,4 +178,9 @@ public class UserModel {
 		return Objects.equals(id, other.id);
 	}
 
+	@Override
+	public String toString() {
+		return "UserModel [nome=" + nome + ", sobrenome=" + sobrenome + ", email=" + email + ", dataNascimento="
+				+ dataNascimento + "]";
+	}
 }

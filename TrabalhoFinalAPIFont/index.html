@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Home</title>
+    <script src="./js/home.js"></script>
+</head>
+<body>
+    <header>
+        <div class="cabecalho1">
+        <img src="https://www.passionateinmarketing.com/wp-content/uploads/2021/08/Orkut.png" alt="" class="logo">
+        <a href="" class="link">home</a>
+        <a href="" class="link">menssagens</a>
+        <a href="" class="link">configurações</a>
+        <a href="" class="link">ajuda</a>
+        <a href="" class="link">Novos</a>
+    </div>
+    <div class="cabecalho2">
+        <p id="email" class="texto-email">mari@gmail.com</p>
+        <a href="" class="link">configurações</a>
+        <a href="" onclick="deslogar()" class="link">sair</a>
+        <form class="form-pesquisar">
+            <input type="text" class="pesquisar-texto">
+            <button type="submit" class="pesquisar-lupa"><img src="assets/src/icons.png" alt=""></button>
+        </form>
+    </header>
+    <main id="main-index">
+        <section class="perfil">
+            <div class="informacoes">
+                <img id="fotoPerfil" src="https://avatars.mds.yandex.net/i?id=d8c28d5c3e380d8aaea89adb4e968cf7f20b39e3-5667442-images-thumbs&n=13" alt="" class="foto">
+                <h2 id="name" class="nome">Nome</h2>
+                <p id="descricao" class="descricao">female, in a relationship, Belo Horizonte, Brasil</p>
+                <img src="assets/src/div.png" alt="" class="div">
+                <a href="" class="link-body">✏️ editar perfil</a>
+                <img src="assets/src/div.png" alt="" class="div">
+                <div class="outros">
+                <a href="" class="link-body">👩‍🦰 perfil</a>
+                <a href="" class="link-body">📝 recados</a>
+                <a href="" class="link-body">📷 álbum</a>
+                <a href="" class="link-body">🎥 vídeos</a>
+            </div>
+        </div>
+            <div class="outros">
+                <a href="" class="link-body">🔗 feeds</a>
+                <a href="" class="link-body">🎉️ aniverssário</a>
+                <a href="" class="link-body">✉️ menssagens</a>
+                <a href="" class="link-body">✍️ depoimentos</a>
+                <a href="" class="link-body">✅ listas</a>
+                <a href="" class="link-body">⚙️ configurações</a>
+            </div>
+        </section>
+        <section class="timeline">
+            <div class="postar">
+                <textarea id="text_post" placeholder="Criar postagem" cols="70" rows="10" class="post"></textarea>
+                <div class="botoes">
+                <button type="" class="botao-cancel">Cancel</button>
+                <button type="submit" onclick="addpostagem()" class="botao-post">Post</button>
+            </div>
+            </div>
+            <div id="postagens" class="postagens">
+                <h1 class="postagens-titulo">Postagens</h1>
+                <ul class="listas-postagens">
+                    
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+
+    </footer>
+</body>
+</html>

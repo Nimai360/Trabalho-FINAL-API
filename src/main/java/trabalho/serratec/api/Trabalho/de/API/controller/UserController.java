@@ -60,7 +60,7 @@ public class UserController {
 	public ResponseEntity<UserDTO> buscar(@PathVariable Long id) {
 		UserDTO usuario = userService.buscar(id);
 		if (usuario == null) {
-			ResponseEntity.notFound().build();
+			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.ok(usuario);
 	}

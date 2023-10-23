@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Login</title>
+
+    <script src="./js/login.js"></script>
+</head>
+<body>
+    
+  
+    <main id="main-login">
+
+        <section id="menssagem-principal">
+            <h1 class="titulo-principal">Orkut</h1>
+            <p class="texto-principal"><span>Conectar-se</span> aos seu amigos e familiares usando recados e menssagens instantâneas <br>
+            <span>Conheça</span> novas pessoa através de amigos do seus amigos e comunidades<br>
+            <span>compartilhe</span> seus vídeos, fotos e paixões em um só lugar</p>
+        </section>
+        <section id="login">
+            
+            <form class="form-login">
+                <p class="texto-login">Acesse o orkut com a sua conta</p>
+                <div class="campos-email">
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" class="input-login" placeholder="Informe o seu email">
+            </div>
+            <div class="campos-senha">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" class="input-login" placeholder="Informe a sua senha">
+            </div>
+            <div class="checkbox-salvar">
+                <input type="checkbox" id="salvar">
+                <label for="salvar" id="label-salvar">Salvar minhas informações neste computador.</label>
+            </div>
+            <p class="pequeno-aviso">Não use em computadores piblicos. [?]</p>
+                <button type="submit" onclick="logar()" class="login">Login</button>
+                <a href="#" class="outro-jeito">Não consegue acessar a sua conta?</a>
+            </form>
+
+            <div class="cadastrar">
+                <p class="texto-cadastrar">Ainda não é membro?</p>
+                <a href="#" class="link-cadastrar">Entrar já</a>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer-login">
+        <p class="texto-footer">@2009 Google - <a href="#" class="link-footer">Sobre o Orkut</a> - <a href="#" class="link-footer">Centro de segurança</a> - <a href="#" class="link-footer">Privacidade</a> - <a href="#" class="link-footer">Termos</a></p>
+    </footer>
+</body>
+</html>

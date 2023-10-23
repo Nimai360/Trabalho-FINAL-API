@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Cadastro</title>
+</head>
+<body class="body-cadastrar">
+    <header id="header-cadastro">
+        <img src="https://www.passionateinmarketing.com/wp-content/uploads/2021/08/Orkut.png" alt="" class="logo-cadastro">
+        <h2 class="login-cadastro">Criação da Conta</h2>
+    </header>
+    <main>
+        <form>
+            <div class="nome-cadastro">
+                <p class="texto-nome-cadastro">Já que seremos amigos, você<br> pode nos dizer seu<br> nome?</p>
+                <label for="input-nome-cadastro" class="label cadastro">nome:</label>
+                <input type="text" id="input-nome-cadastro">
+                <label for="input-sobrenome-cadastro" class="label cadastro">sobrenome:</label>
+                <input type="text" id="input-sobrenome-cadastro">
+            </div>
+
+            <div class="data-nascimento-cadastro">
+                <p class="texto-nascimento-cadastro">Desculpe se estamos sendo <br>indiscretos, mas quando você<br> nasceu?</p>
+                <input type="date" id="input-data-cadastro">
+            </div>
+
+            <div class="email-cadastro">
+                <p class="texto-email-cadastro">Pode nos dizer qual o seu <br>email?</p>
+                <input type="email" id="input-data-cadastro">
+            </div>
+
+            <div class="senha-cadastro">
+                <p class="texto-email-cadastro">Crie uma senha forte, utlize<br> simbolos, além de números <br>e letras</p>
+                <label class="texto-senha-cadastro">senha:</label>
+                <input type="password" id="input-senha-cadastro">
+                <label class="texto-comfirme-senha-cadastro">Comfime senha:</label>
+                <input type="password" id="input-senha-cadastro">
+            </div>
+
+            <div class="foto-cadastro">
+                <label class="arquivo-foto">Adicione um foto sua:</label>
+                <input type="file" id="input-arquivo-foto">
+            </div>
+
+            <div class="termos-servico">
+                <input type="checkbox" id="aceito">
+                <label for="aceito">Aceite os termos de serviço e política de privacidade</label>
+            </div>
+            <input type="submit" value="Cadastrar" class="input-cadastrar">
+        </form>
+    </main>
+
+    <footer id="footer-login">
+        <p class="texto-footer">@2009 Google - <a href="#" class="link-footer">Sobre o Orkut</a> - <a href="#" class="link-footer">Centro de segurança</a> - <a href="#" class="link-footer">Privacidade</a> - <a href="#" class="link-footer">Termos</a></p>
+    </footer>
+</body>
+</html>
