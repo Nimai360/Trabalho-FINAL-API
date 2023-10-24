@@ -2,6 +2,7 @@ package trabalho.serratec.api.Trabalho.de.API.model;
 
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class FotoModel {
 	@Column
 	private String nome;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_usuario")
 	private UserModel usuario;
 

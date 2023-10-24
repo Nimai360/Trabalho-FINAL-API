@@ -94,7 +94,7 @@ public class UserService {
 		user.setSenha(bCryptPasswordEncoder.encode(user.getSenha()));
 		
 		UserModel usuario = new UserModel(user);
-		mailConfig.sendEmail(usuario.getEmail(), "Cadastro de Usuario", usuario.toString());
+//		mailConfig.sendEmail(usuario.getEmail(), "Cadastro de Usuario", usuario.toString());
 
 		usuario = userRepository.save(usuario);
 //		return new UserDTO(usuario);

@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests()
 		.antMatchers(HttpMethod.POST, "/usuarios").permitAll() // Apenas para quem não se conectou ainda
+		.antMatchers("/h2-console/**").permitAll() // liberar h2
 //		.antMatchers("/funcionarios/salarios-por-idade").permitAll()
 //		.antMatchers(HttpMethod.GET, "/funcionarios/salario", "/funcionarios/nome", "/funcionarios/paginado").hasAuthority("ADMIN")
 //		.antMatchers(HttpMethod.GET, "/usuarios").hasAnyAuthority("ADMIN", "USER")
@@ -59,7 +60,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.cors()
 		.and()
-		.csrf().disable();
+		.csrf().disable()
+		.headers().frameOptions().sameOrigin(); // liberar h2
+		
 		http.addFilter(new JwtAuthenticationFilter(this.authenticationManager(), jwtUtil));
 		http.addFilter(new JwtAuthorizationFilter(this.authenticationManager(), jwtUtil, userDetailsService));
 	}
